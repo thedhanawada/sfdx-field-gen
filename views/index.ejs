@@ -38,27 +38,39 @@
 
                     <p>After spending what felt like forever creating these fields one by one, I thought "This is ridiculous - there's got to be a better way!" And when I couldn't find a tool that did exactly what I needed, I built one.</p>
 
-                    <p>Now instead of spending 15 minutes per field clicking through menus or writing XML, I can generate the exact code I need in seconds. Whether you're building a huge data model, working on a managed package, or just need to create a bunch of fields quickly - I hope this saves you the time and headache it saved me!</p>
+                    <p>Now you can either generate fields one at a time or bulk generate hundreds of fields using a simple CSV file. What used to take hours now takes minutes!</p>
                 </div>
 
                 <div class="info-card">
                     <h2>How to Use</h2>
+                    <h3>Single Field Generation</h3>
                     <ol>
                         <li>Fill in the field details in the form</li>
-                        <li>Click "Generate XML" to see the output</li>
-                        <li>Copy the generated XML</li>
-                        <li>Paste into your Salesforce package XML file</li>
+                        <li>Click "Generate XML"</li>
+                        <li>Copy both the file name and XML content</li>
+                        <li>Create the file in your VS Code project</li>
                         <li>Deploy using Salesforce DX or Metadata API</li>
+                    </ol>
+
+                    <h3>Bulk Field Generation</h3>
+                    <ol>
+                        <li>Download the CSV template</li>
+                        <li>Fill in your field details in the CSV</li>
+                        <li>Upload the completed CSV</li>
+                        <li>Download the generated ZIP file</li>
+                        <li>Extract to your VS Code project's fields directory</li>
                     </ol>
                 </div>
 
                 <div class="info-card">
                     <h2>Pro Tips</h2>
                     <ul>
-                        <li>Remember to include "__c" in your field API names</li>
-                        <li>For picklist values, separate each value with a comma</li>
-                        <li>Keep your field labels clear and user-friendly</li>
+                        <li>Always include "__c" in your field API names</li>
+                        <li>For single picklist values, separate with commas (e.g., High, Medium, Low)</li>
+                        <li>For bulk CSV picklist values, separate with semicolons (e.g., High;Medium;Low)</li>
+                        <li>Keep field labels user-friendly and clear</li>
                         <li>Add help text to improve user experience</li>
+                        <li>For bulk uploads, verify your CSV headers match the template exactly</li>
                     </ul>
                 </div>
             </section>
@@ -132,27 +144,22 @@
                     </div>
                 </section>
 
-
-            </div>
-
-            <div class="bulk-generator-container">
                 <section class="form-section bulk-upload-section">
                     <h2>Bulk Generate Fields from CSV</h2>
                     <div class="info-box">
-                        <p>Upload a CSV file with field definitions to generate multiple field XMLs at once.</p>
+                        <p>Need to create multiple fields? Upload a CSV file with all your field definitions to generate a ZIP file containing all field XMLs.</p>
                         <a href="#" id="downloadTemplateBtn" class="btn btn-secondary">Download CSV Template</a>
                     </div>
                     <form id="csvUploadForm" class="field-form">
                         <div class="form-group">
                             <label for="csvFile">Upload CSV File:</label>
                             <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
-                            <small class="help-text">CSV should have columns: API Name, Label, Type, Required, Help Text, Picklist Values</small>
+                            <small class="help-text">CSV should have columns: API Name, Label, Type, Required, Help Text, Picklist Values (use semicolons for picklist values)</small>
                         </div>
                         <button type="submit" class="btn btn-primary">Generate Zip File</button>
                     </form>
                 </section>
             </div>
-
         </div>
 
         <footer class="footer">
@@ -183,6 +190,7 @@
             </div>
         </footer>
     </div>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
