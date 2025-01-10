@@ -268,23 +268,33 @@
 
         // Handle CSV upload
         csvUploadForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(csvUploadForm);
-            const response = await fetch('/bulk-generate', {
-                method: 'POST',
-                body: formData
-            });
+    e.preventDefault();
+    const formData = new FormData();
+    const csvFile = document.getElementById('csvFile').files[0];
+    formData.append('csv', csvFile);
 
-            if (response.ok) {
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'custom_fields.zip';
-                a.click();
-                window.URL.revokeObjectURL(url);
-            }
+    try {
+        const response = await fetch('/bulk-generate', {
+            method: 'POST',
+            body: formData  // Don't set Content-Type header - let the browser set it
         });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'custom_fields.zip';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            alert('Error generating ZIP file. Please check your CSV format and try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error uploading file. Please try again.');
+    }
+});
     </script>
 </body>
 </html>

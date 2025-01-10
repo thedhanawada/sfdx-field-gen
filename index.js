@@ -82,39 +82,47 @@ app.get('/template', (req, res) => {
 });
 
 // Route to process CSV upload
+
 app.post('/bulk-generate', async (req, res) => {
-  if (!req.files || !req.files.csv) {
-      return res.status(400).send('No file uploaded');
-  }
-
-  const csvFile = req.files.csv;
-  const records = [];
-
-  // Parse CSV
-  csv.parse(csvFile.data.toString(), {
-      columns: true,
-      skip_empty_lines: true
-  }, (err, data) => {
-      if (err) {
-          return res.status(400).send('Error parsing CSV');
+  try {
+      if (!req.files || !req.files.csv) {
+          console.log('No file uploaded:', req.files);
+          return res.status(400).send('No file uploaded');
       }
 
-      // Create zip file
-      const archive = archiver('zip', {
-          zlib: { level: 9 }
+      const csvFile = req.files.csv;
+      console.log('Processing file:', csvFile.name);
+
+      // Parse CSV
+      csv.parse(csvFile.data.toString(), {
+          columns: true,
+          skip_empty_lines: true
+      }, (err, data) => {
+          if (err) {
+              console.error('CSV parsing error:', err);
+              return res.status(400).send('Error parsing CSV');
+          }
+
+          // Create zip file
+          const archive = archiver('zip', {
+              zlib: { level: 9 }
+          });
+
+          res.attachment('custom_fields.zip');
+          archive.pipe(res);
+
+          // Process each row
+          data.forEach(row => {
+              const xml = generateFieldXML(row);
+              archive.append(xml, { name: `fields/${row['API Name']}.field-meta.xml` });
+          });
+
+          archive.finalize();
       });
-
-      res.attachment('custom_fields.zip');
-      archive.pipe(res);
-
-      // Process each row
-      data.forEach(row => {
-          const xml = generateFieldXML(row); // Create a helper function for this
-          archive.append(xml, { name: `fields/${row['API Name']}.field-meta.xml` });
-      });
-
-      archive.finalize();
-  });
+  } catch (error) {
+      console.error('Server error:', error);
+      res.status(500).send('Server error processing file');
+  }
 });
 
 function generateFieldXML(field) {
