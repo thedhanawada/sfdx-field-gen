@@ -19,4 +19,4 @@ As Salesforce developers, we often need to create multiple custom fields, which 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/ndhanawada/sfdx-field-gen.git
+git clone https://github.com/thedhanawada/sfdx-field-gen.git
