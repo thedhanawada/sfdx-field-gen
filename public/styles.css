@@ -355,3 +355,33 @@ body {
   margin-bottom: 10px;
   font-family: monospace;
 }
+
+.form-sections-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.form-output-container, .bulk-generator-container {
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing);
+}
+
+.bulk-generator-container {
+  margin-top: 20px;
+}
+
+.bulk-upload-section {
+  border-top: none;
+  padding-top: 0;
+}
+
+.info-box {
+  background-color: #f8f8ff;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 25px;
+  border-left: 4px solid var(--primary-color);
+}

@@ -6,10 +6,12 @@ const port = process.env.PORT || 3000;
 const csv = require('csv-parse');
 const archiver = require('archiver');
 const fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(fileUpload());
 
 app.get('/', (req, res) => {
   res.render('index');
