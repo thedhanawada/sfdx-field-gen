@@ -43,6 +43,30 @@ body {
   font-size: 1.1em;
 }
 
+.open-source-banner {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #24292e;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.github-link:hover {
+  background: #1a1f24;
+}
+
 .content-wrapper {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -201,10 +225,70 @@ body {
 }
 
 .footer {
-  text-align: center;
   margin-top: 40px;
   padding: 20px 0;
+  border-top: 1px solid #d8dde6;
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer p {
   color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+.tech-details-btn {
+  background: none;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.tech-details-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.tech-details-content {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--card-background);
+  border-radius: var(--border-radius);
+  text-align: left;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tech-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.tech-details-item {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  border-left: 3px solid var(--primary-color);
+}
+
+.tech-details-item h4 {
+  color: var(--primary-color);
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
+}
+
+.tech-details-item p {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 0.95em;
+  line-height: 1.5;
 }
 
 @media (max-width: 1024px) {
@@ -214,6 +298,10 @@ body {
 
   .info-section {
       order: 2;
+  }
+
+  .tech-details-grid {
+      grid-template-columns: 1fr;
   }
 }
 
@@ -232,6 +320,10 @@ body {
 
   .btn {
       width: 100%;
+  }
+
+  .tech-details-item {
+      padding: 15px;
   }
 }
 

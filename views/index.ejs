@@ -134,50 +134,32 @@
             </div>
         </div>
 
-        <div class="stats-section">
-          <button id="statsBtn" class="stats-toggle">Developer Details 👨‍💻</button>
-                      <div id="statsContent" class="stats-content" style="display: none;">
-                <h3>Technical Details</h3>
-                <div class="stats-grid">
-                    <div class="stats-item">
-                        <h4>Frontend</h4>
-                        <ul>
-                            <li>Vanilla JavaScript</li>
-                            <li>EJS Templates</li>
-                            <li>CSS3 with Custom Properties</li>
-                            <li>Prism.js for syntax highlighting</li>
-                        </ul>
-                    </div>
-                    <div class="stats-item">
-                        <h4>Backend</h4>
-                        <ul>
-                            <li>Node.js</li>
-                            <li>Express.js</li>
-                            <li>Body Parser</li>
-                        </ul>
-                    </div>
-                    <div class="stats-item">
-                        <h4>Hosting & Deployment</h4>
-                        <ul>
-                            <li>Hosted on Render</li>
-                            <li>Auto-deploys from GitHub</li>
-                            <li>Version control with Git</li>
-                        </ul>
-                    </div>
-                    <div class="stats-item">
-                        <h4>Performance</h4>
-                        <ul>
-                            <li>No database - all client-side</li>
-                            <li>Minimal dependencies</li>
-                            <li>Lightweight & fast</li>
-                        </ul>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>Built with ❤️ for the Salesforce developer community</p>
+                <button id="techDetailsBtn" class="tech-details-btn">Developer Details 👨‍💻</button>
+
+                <div id="techDetailsContent" class="tech-details-content" style="display: none;">
+                    <div class="tech-details-grid">
+                        <div class="tech-details-item">
+                            <h4>Frontend Architecture</h4>
+                            <p>Built with vanilla JavaScript for maximum performance and minimal overhead. Uses modern ES6+ features and the Fetch API for seamless AJAX requests. EJS templating enables dynamic server-side rendering, while custom CSS properties provide consistent theming.</p>
+                        </div>
+                        <div class="tech-details-item">
+                            <h4>Backend Implementation</h4>
+                            <p>Powered by Node.js and Express.js, providing a lightweight and efficient server implementation. Uses Body Parser for request parsing and serves static assets optimized for production.</p>
+                        </div>
+                        <div class="tech-details-item">
+                            <h4>Development & Deployment</h4>
+                            <p>Hosted on Render's cloud platform with automatic deployments from GitHub. Version controlled using Git, enabling collaborative development and easy rollbacks if needed.</p>
+                        </div>
+                        <div class="tech-details-item">
+                            <h4>Performance Optimization</h4>
+                            <p>Client-side processing minimizes server load. No database dependencies ensure quick response times. Implements efficient DOM manipulation and event handling for a smooth user experience.</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <footer class="footer">
-            <p>Built with ❤️ for the Salesforce developer community</p>
         </footer>
     </div>
 
@@ -192,8 +174,8 @@
         const xmlOutput = document.getElementById('xmlOutput');
         const copyBtn = document.getElementById('copyBtn');
         const downloadBtn = document.getElementById('downloadBtn');
-        const statsBtn = document.getElementById('statsBtn');
-        const statsContent = document.getElementById('statsContent');
+        const techDetailsBtn = document.getElementById('techDetailsBtn');
+        const techDetailsContent = document.getElementById('techDetailsContent');
 
         typeSelect.addEventListener('change', () => {
             picklistOptions.style.display = typeSelect.value === 'Picklist' ? 'block' : 'none';
@@ -234,12 +216,14 @@
             window.URL.revokeObjectURL(url);
         });
 
-        statsBtn.addEventListener('click', () => {
-            const isHidden = statsContent.style.display === 'none';
-            statsContent.style.display = isHidden ? 'block' : 'none';
-            statsBtn.textContent = isHidden ? 'Hide Details 👨‍💻' : 'Developer Details 👨‍💻';
+        techDetailsBtn.addEventListener('click', () => {
+            const isHidden = techDetailsContent.style.display === 'none';
+            techDetailsContent.style.display = isHidden ? 'block' : 'none';
+            techDetailsBtn.textContent = isHidden ? 'Hide Details 👨‍💻' : 'Developer Details 👨‍💻';
+            if (isHidden) {
+                techDetailsContent.scrollIntoView({ behavior: 'smooth' });
+            }
         });
-
-</script>
+    </script>
 </body>
 </html>
