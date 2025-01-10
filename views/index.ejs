@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Custom Field XML Generator</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+</head>
+<body>
+    <div class="main-container">
+        <header class="header">
+            <h1>Salesforce Custom Field XML Generator</h1>
+            <p class="subtitle">Generate metadata XML for Salesforce custom fields quickly and efficiently</p>
+        </header>
+
+        <div class="content-wrapper">
+            <section class="info-section">
+                <div class="info-card story-card">
+                    <h2>Why I Built This Tool</h2>
+                    <p>As a Salesforce developer, I faced a common but tedious challenge: I needed to create 100+ custom fields for an object. My options were either:</p>
+                    <ul>
+                        <li>Click through Salesforce UI repeatedly (mind-numbing and time-consuming)</li>
+                        <li>Write XML manually in VS Code (prone to errors and equally time-consuming)</li>
+                        <li>Use the Salesforce CLI commands (still requires individual effort for each field)</li>
+                    </ul>
+                    <p>After spending hours creating fields one by one, I thought: "There has to be a better way!" That's when I built this tool. Now, instead of spending 15 minutes per field dealing with UI clicks or manual XML writing, I can generate clean, deployable XML in seconds.</p>
+                    <p>Whether you're doing a large data model implementation, creating fields for a managed package, or just need to set up a bunch of fields quickly - this tool will save you hours of work.</p>
+                </div>
+
+                <div class="info-card">
+                    <h2>How to Use</h2>
+                    <ol>
+                        <li>Fill in the field details in the form</li>
+                        <li>Click "Generate XML" to see the output</li>
+                        <li>Copy the generated XML</li>
+                        <li>Paste into your Salesforce package XML file</li>
+                        <li>Deploy using Salesforce DX or Metadata API</li>
+                    </ol>
+                </div>
+
+                <div class="info-card">
+                    <h2>Pro Tips</h2>
+                    <ul>
+                        <li>Remember to include "__c" in your field API names</li>
+                        <li>For picklist values, separate each value with a comma</li>
+                        <li>Keep your field labels clear and user-friendly</li>
+                        <li>Add help text to improve user experience</li>
+                    </ul>
+                </div>
+            </section>
+
+            <div class="form-output-container">
+                <section class="form-section">
+                    <h2>Generate Field XML</h2>
+                    <form id="fieldForm" class="field-form">
+                        <div class="form-group">
+                            <label for="fullName">API Name:</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                            <small class="help-text">Don't forget to add "__c" (e.g., My_Custom_Field__c)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="label">Field Label:</label>
+                            <input type="text" id="label" name="label" required>
+                            <small class="help-text">The label users will see in Salesforce</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="type">Field Type:</label>
+                            <select id="type" name="type">
+                                <option value="Text">Text</option>
+                                <option value="Picklist">Picklist</option>
+                                <option value="Checkbox">Checkbox</option>
+                                <option value="Number">Number</option>
+                                <option value="Date">Date</option>
+                                <option value="DateTime">DateTime</option>
+                                <option value="Email">Email</option>
+                                <option value="Phone">Phone</option>
+                                <option value="URL">URL</option>
+                                <option value="TextArea">TextArea</option>
+                                <option value="LongTextArea">LongTextArea</option>
+                                <option value="Currency">Currency</option>
+                                <option value="Percent">Percent</option>
+                            </select>
+                        </div>
+
+                        <div id="picklistOptions" class="form-group" style="display:none;">
+                            <label for="picklistValues">Picklist Values:</label>
+                            <input type="text" id="picklistValues" name="picklistValues">
+                            <small class="help-text">Enter values separated by commas (e.g., High, Medium, Low)</small>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <label for="required">
+                                <input type="checkbox" id="required" name="required">
+                                Required Field
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inlineHelpText">Help Text:</label>
+                            <input type="text" id="inlineHelpText" name="inlineHelpText">
+                            <small class="help-text">Helpful information for users filling out this field</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Generate XML</button>
+                    </form>
+                </section>
+
+                <section id="output-section" class="output-section" style="display: none;">
+                    <h2>Generated XML</h2>
+                    <div class="output-box">
+                        <pre><code class="language-xml" id="xmlOutput"></code></pre>
+                    </div>
+                    <div class="button-group">
+                        <button id="copyBtn" class="btn btn-secondary">Copy XML</button>
+                        <button id="downloadBtn" class="btn btn-primary">Download XML</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Built with ❤️ for the Salesforce developer community</p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-xml.min.js"></script>
+    <script>
+        const form = document.getElementById('fieldForm');
+        const typeSelect = document.getElementById('type');
+        const picklistOptions = document.getElementById('picklistOptions');
+        const outputSection = document.getElementById('output-section');
+        const xmlOutput = document.getElementById('xmlOutput');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        typeSelect.addEventListener('change', () => {
+            picklistOptions.style.display = typeSelect.value === 'Picklist' ? 'block' : 'none';
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(formData),
+            });
+            const data = await response.text();
+            xmlOutput.textContent = data;
+            Prism.highlightElement(xmlOutput);
+            outputSection.style.display = 'block';
+            outputSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(xmlOutput.textContent);
+            copyBtn.textContent = 'Copied!';
+            setTimeout(() => {
+                copyBtn.textContent = 'Copy XML';
+            }, 2000);
+        });
+
+        downloadBtn.addEventListener('click', () => {
+            const blob = new Blob([xmlOutput.textContent], { type: 'text/xml' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'custom_field.xml';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>

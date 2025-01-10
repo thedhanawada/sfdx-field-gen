@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Salesforce Field XML</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Generated Salesforce Field XML</h1>
+        <div class="output-box">
+            <pre><code class="language-xml"><%- xml %></code></pre>
+        </div>
+        <div class="button-group">
+            <a href="/" class="btn btn-secondary">Generate Another Field</a>
+            <a href="/download?xml=<%- encodeURIComponent(xml) %>" class="btn btn-primary">Download XML</a>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-xml.min.js"></script>
+    <script>
+        // Initialize Prism.js highlighting
+        Prism.highlightAll();
+    </script>
+</body>
+</html>
