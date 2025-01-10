@@ -25,24 +25,24 @@
 
         <div class="content-wrapper">
             <section class="info-section">
-                <div class="info-card story-card">
-                    <h2>Why I Built This Tool</h2>
-                    <p>So here's the thing - I was working on this Salesforce project where I had to create over 100 custom fields. Yeah, you read that right. 100+ fields! 😅</p>
+                <details class="info-card story-card" open>
+                    <summary>Why I Built This</summary>
+                    <p>If you've ever worked on a big Salesforce project, you know that sometimes you need to create a ton of custom fields. I was in that exact situation, staring down the barrel of creating over 100 fields. It's a necessary part of the job, but let's be honest, it can be pretty tedious.</p>
 
-                    <p>I had three options, and honestly, none of them were great:</p>
+                    <p>I had a few not-so-great options:</p>
                     <ul>
-                        <li>Click through the Salesforce UI like a robot (seriously, my mouse hand was getting tired)</li>
-                        <li>Write XML manually in VS Code (and probably mess up the formatting 20 times)</li>
-                        <li>Use Salesforce CLI commands (and still have to do each field one by one)</li>
+                        <li>Click through the Salesforce UI for each and every field. Talk about repetitive - my hand was already cramping at the thought!</li>
+                        <li>Write the XML code myself in VS Code. I'm a developer, but that still meant a high chance of making mistakes and spending hours debugging.</li>
+                        <li>Use Salesforce CLI commands. Better than clicking, but still a lot of manual work, one field at a time.</li>
                     </ul>
 
-                    <p>After spending what felt like forever creating these fields one by one, I thought "This is ridiculous - there's got to be a better way!" And when I couldn't find a tool that did exactly what I needed, I built one.</p>
+                    <p>It felt like it was taking forever to get these fields set up. I knew there had to be a simpler way to do this. I looked around for a tool that could automate the process, but I couldn't find anything that fit the bill.</p>
 
-                    <p>Now you can either generate fields one at a time or bulk generate hundreds of fields using a simple CSV file. What used to take hours now takes minutes!</p>
-                </div>
+                    <p>That's when I decided to build my own solution. This tool lets you create fields one at a time, which is still handy sometimes. But the real time-saver is the bulk CSV upload. You can define all your fields in a spreadsheet, upload it, and boom - they're ready to go! It's made a huge difference in how quickly I can get this kind of work done.</p>
+                </details>
 
-                <div class="info-card">
-                    <h2>How to Use</h2>
+                <details class="info-card">
+                    <summary>How to Use</summary>
                     <h3>Single Field Generation</h3>
                     <ol>
                         <li>Fill in the field details in the form</li>
@@ -60,10 +60,10 @@
                         <li>Download the generated ZIP file</li>
                         <li>Extract to your VS Code project's fields directory</li>
                     </ol>
-                </div>
+                </details>
 
-                <div class="info-card">
-                    <h2>Pro Tips</h2>
+                <details class="info-card">
+                    <summary>Pro Tips</summary>
                     <ul>
                         <li>Always include "__c" in your field API names</li>
                         <li>For single picklist values, separate with commas (e.g., High, Medium, Low)</li>
@@ -72,7 +72,7 @@
                         <li>Add help text to improve user experience</li>
                         <li>For bulk uploads, verify your CSV headers match the template exactly</li>
                     </ul>
-                </div>
+                </details>
             </section>
 
             <div class="form-output-container">
@@ -155,8 +155,9 @@
                             <label for="csvFile">Upload CSV File:</label>
                             <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
                             <small class="help-text">CSV should have columns: API Name, Label, Type, Required, Help Text, Picklist Values (use semicolons for picklist values)</small>
+                            <span class="file-chosen">No file chosen</span>
                         </div>
-                        <button type="submit" class="btn btn-primary">Generate Zip File</button>
+                        <button type="submit" class="btn btn-primary">Create Fields & Download Zip</button>
                     </form>
                 </section>
             </div>
@@ -165,32 +166,53 @@
         <footer class="footer">
             <div class="footer-content">
                 <p>Built with ❤️ for the Salesforce developer community</p>
-                <button id="techDetailsBtn" class="tech-details-btn">Developer Details 👨‍💻</button>
+                <button id="techDetailsBtn" class="tech-details-btn">Technical Details</button>
 
                 <div id="techDetailsContent" class="tech-details-content" style="display: none;">
                     <div class="tech-details-grid">
                         <div class="tech-details-item">
-                            <h4>Frontend Architecture</h4>
-                            <p>Built with vanilla JavaScript for maximum performance and minimal overhead. Uses modern ES6+ features and the Fetch API for seamless AJAX requests. EJS templating enables dynamic server-side rendering, while custom CSS properties provide consistent theming.</p>
+                            <h4>Frontend</h4>
+                            <ul>
+                                <li>Vanilla JavaScript (ES6+)</li>
+                                <li>No frontend frameworks</li>
+                                <li>Fetch API for AJAX requests</li>
+                                <li>EJS for server-side templating</li>
+                                <li>CSS custom properties for theming</li>
+                                <li>Prism.js for syntax highlighting</li>
+                            </ul>
                         </div>
                         <div class="tech-details-item">
-                            <h4>Backend Implementation</h4>
-                            <p>Powered by Node.js and Express.js, providing a lightweight and efficient server implementation. Uses Body Parser for request parsing and serves static assets optimized for production.</p>
+                            <h4>Backend</h4>
+                            <ul>
+                                <li>Node.js</li>
+                                <li>Express.js framework</li>
+                                <li>Body Parser middleware for request parsing</li>
+                                <li><a href="https://www.npmjs.com/package/csv-parse" target="_blank">csv-parse</a> for CSV processing</li>
+                                <li><a href="https://www.npmjs.com/package/archiver" target="_blank">archiver</a> for ZIP file creation</li>
+                                <li><a href="https://www.npmjs.com/package/express-fileupload" target="_blank">express-fileupload</a> for file uploads</li>
+                            </ul>
                         </div>
                         <div class="tech-details-item">
-                            <h4>Development & Deployment</h4>
-                            <p>Hosted on Render's cloud platform with automatic deployments from GitHub. Version controlled using Git, enabling collaborative development and easy rollbacks if needed.</p>
+                            <h4>Deployment</h4>
+                            <ul>
+                                <li>Hosted on Render cloud platform</li>
+                                <li>Automatic deployments from GitHub</li>
+                                <li>Git version control</li>
+                            </ul>
                         </div>
                         <div class="tech-details-item">
-                            <h4>Performance Optimization</h4>
-                            <p>Client-side processing minimizes server load. No database dependencies ensure quick response times. Implements efficient DOM manipulation and event handling for a smooth user experience.</p>
+                            <h4>Performance</h4>
+                            <ul>
+                                <li>Client-side processing for reduced server load</li>
+                                <li>No database dependencies</li>
+                                <li>Efficient DOM manipulation</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
@@ -268,33 +290,59 @@
 
         // Handle CSV upload
         csvUploadForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    const csvFile = document.getElementById('csvFile').files[0];
-    formData.append('csv', csvFile);
+            e.preventDefault();
+            const formData = new FormData();
+            const csvFile = document.getElementById('csvFile').files[0];
+            formData.append('csv', csvFile);
 
-    try {
-        const response = await fetch('/bulk-generate', {
-            method: 'POST',
-            body: formData  // Don't set Content-Type header - let the browser set it
+            try {
+                const response = await fetch('/bulk-generate', {
+                    method: 'POST',
+                    body: formData  // Don't set Content-Type header - let the browser set it
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'custom_fields.zip';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                } else {
+                    alert('Error generating ZIP file. Please check your CSV format and try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error uploading file. Please try again.');
+            }
         });
 
-        if (response.ok) {
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'custom_fields.zip';
-            a.click();
-            window.URL.revokeObjectURL(url);
-        } else {
-            alert('Error generating ZIP file. Please check your CSV format and try again.');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Error uploading file. Please try again.');
-    }
-});
+        // Change text of choose file button
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            var fileName = e.target.files[0].name;
+            var nextSibling = e.target.nextElementSibling.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
     </script>
+    <script>
+    // JavaScript to handle collapsible sections
+    document.addEventListener('DOMContentLoaded', function() {
+        const detailsElements = document.querySelectorAll('.info-section details');
+
+        detailsElements.forEach(details => {
+            details.addEventListener('toggle', function() {
+                if (details.open) {
+                    // Close other details elements when one is opened
+                    detailsElements.forEach(otherDetails => {
+                        if (otherDetails !== details) {
+                            otherDetails.open = false;
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

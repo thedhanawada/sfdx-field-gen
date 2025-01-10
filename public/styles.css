@@ -113,13 +113,22 @@ body {
 }
 
 .form-output-container {
-  background-color: var(--card-background);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: var(--spacing);
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+    background-color: transparent; /* Remove background color */
+    border-radius: var(--border-radius);
+    box-shadow: none; /* Remove box shadow */
+    padding: 0; /* Remove padding */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: var(--spacing); /* Add gap between sections */
+}
+
+.form-section {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: var(--spacing);
+    flex-grow: 0;
 }
 
 .form-section h2, .output-section h2 {
@@ -199,10 +208,11 @@ body {
 }
 
 .output-section {
-  margin-top: 30px;
-  padding-top: 30px;
-  border-top: 1px solid #d8dde6;
-  flex-grow: 0;
+    margin-top: 30px;
+    /* Remove border-top from output-section */
+    padding-top: 0;
+    border-top: none;
+    flex-grow: 0;
 }
 
 .output-box {
@@ -327,18 +337,14 @@ body {
   }
 }
 
-.form-section {
-  flex-grow: 0;
-}
-
-.form-output-container:not(:has(.output-section[style*="display: block"])) {
-  max-height: fit-content;
-}
-
 .bulk-upload-section {
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid #d8dde6;
+  /* Remove styles that create a border */
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0; /* Remove top margin */
+}
+.file-chosen {
+  margin-left: 5px;
 }
 
 .info-box {
@@ -362,20 +368,8 @@ body {
   gap: 40px;
 }
 
-.form-output-container, .bulk-generator-container {
-  background-color: var(--card-background);
-  border-radius: var(--border-radius);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: var(--spacing);
-}
-
 .bulk-generator-container {
   margin-top: 20px;
-}
-
-.bulk-upload-section {
-  border-top: none;
-  padding-top: 0;
 }
 
 .info-box {
@@ -384,4 +378,37 @@ body {
   border-radius: var(--border-radius);
   margin-bottom: 25px;
   border-left: 4px solid var(--primary-color);
+}
+
+/* ... your existing styles ... */
+
+/* Styles for collapsible sections */
+.info-section details {
+  /* No additional styles needed, browser handles most of it */
+}
+
+.info-section summary {
+  cursor: pointer;
+  font-weight: bold;
+  list-style: none; /* Remove default arrow in some browsers */
+}
+
+/* Optional: Hide the default arrow in Chrome/Safari */
+.info-section summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Optional: Add a custom arrow with a "+" and "-" icon */
+.info-section summary::before {
+    content: "+";
+    margin-right: 5px;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.info-section details[open] summary::before {
+    content: "-";
+    transform: rotate(45deg);
 }
