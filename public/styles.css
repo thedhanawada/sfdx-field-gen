@@ -334,3 +334,24 @@ body {
 .form-output-container:not(:has(.output-section[style*="display: block"])) {
   max-height: fit-content;
 }
+
+.bulk-upload-section {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #d8dde6;
+}
+
+.info-box {
+  background-color: #f8f8ff;
+  padding: 15px;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+}
+
+.file-name {
+  padding: 10px;
+  background: #e3f2fd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-family: monospace;
+}

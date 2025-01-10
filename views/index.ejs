@@ -131,6 +131,23 @@
                         <button id="downloadBtn" class="btn btn-primary">Download XML</button>
                     </div>
                 </section>
+
+                <section class="form-section bulk-upload-section">
+                    <h2>Bulk Generate Fields from CSV</h2>
+                    <div class="info-box">
+                        <p>Upload a CSV file with field definitions to generate multiple field XMLs at once.</p>
+                        <a href="#" id="downloadTemplateBtn" class="btn btn-secondary">Download CSV Template</a>
+                    </div>
+                    <form id="csvUploadForm" class="field-form">
+                        <div class="form-group">
+                            <label for="csvFile">Upload CSV File:</label>
+                            <input type="file" id="csvFile" name="csvFile" accept=".csv" required>
+                            <small class="help-text">CSV should have columns: API Name, Label, Type, Required, Help Text, Picklist Values</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Generate Zip File</button>
+                    </form>
+                </section>
+
             </div>
         </div>
 
@@ -176,6 +193,8 @@
         const downloadBtn = document.getElementById('downloadBtn');
         const techDetailsBtn = document.getElementById('techDetailsBtn');
         const techDetailsContent = document.getElementById('techDetailsContent');
+        const csvUploadForm = document.getElementById('csvUploadForm');
+        const downloadTemplateBtn = document.getElementById('downloadTemplateBtn');
 
         typeSelect.addEventListener('change', () => {
             picklistOptions.style.display = typeSelect.value === 'Picklist' ? 'block' : 'none';
@@ -191,8 +210,12 @@
                 },
                 body: new URLSearchParams(formData),
             });
-            const data = await response.text();
-            xmlOutput.textContent = data;
+            const data = await response.json();
+            xmlOutput.textContent = data.xml;
+            const fileNameDiv = document.createElement('div');
+            fileNameDiv.className = 'file-name';
+            fileNameDiv.textContent = `File Name: ${data.fileName}`;
+            outputSection.querySelector('.output-box').insertBefore(fileNameDiv, outputSection.querySelector('pre'));
             Prism.highlightElement(xmlOutput);
             outputSection.style.display = 'block';
             outputSection.scrollIntoView({ behavior: 'smooth' });
@@ -222,6 +245,32 @@
             techDetailsBtn.textContent = isHidden ? 'Hide Details 👨‍💻' : 'Developer Details 👨‍💻';
             if (isHidden) {
                 techDetailsContent.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Handle CSV template download
+        downloadTemplateBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/template';
+        });
+
+        // Handle CSV upload
+        csvUploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(csvUploadForm);
+            const response = await fetch('/bulk-generate', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'custom_fields.zip';
+                a.click();
+                window.URL.revokeObjectURL(url);
             }
         });
     </script>
